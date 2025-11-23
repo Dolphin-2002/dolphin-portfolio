@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
 
-const Projects = () => {
+const Projects: React.FC = () => {
   const { ref, inView } = useInView({
     threshold: 0.2,
     triggerOnce: true
@@ -13,62 +13,62 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "E-Commerce Platform",
-      description: "A modern, responsive e-commerce platform built with React and Node.js",
-      tags: ["React", "Node.js", "MongoDB", "Stripe"],
-      image: "🛒",
-      color: "#FF6B6B",
-      status: "Live",
+      title: "Study Management System",
+      description: "A desktop application built with C# to help students organize and manage their study schedules effectively",
+      tags: ["C#", "Desktop App", ".NET Framework"],
+      image: "�",
+      color: "#239120",
+      status: "Completed",
       link: "#"
     },
     {
       id: 2,
-      title: "Task Management App",
-      description: "Collaborative task management tool with real-time updates",
-      tags: ["Vue.js", "Firebase", "Tailwind"],
-      image: "📋",
-      color: "#4ECDC4",
-      status: "In Progress",
+      title: "HTML Game Development",
+      description: "Interactive web-based games using HTML, CSS, and JavaScript with engaging user interfaces",
+      tags: ["HTML", "CSS", "JavaScript"],
+      image: "🎮",
+      color: "#E34F26",
+      status: "Completed",
       link: "#"
     },
     {
       id: 3,
-      title: "Weather Dashboard",
-      description: "Beautiful weather app with animated backgrounds and forecasts",
-      tags: ["React", "OpenWeather API", "SCSS"],
-      image: "🌤️",
-      color: "#45B7D1",
-      status: "Live",
+      title: "School Management System",
+      description: "Desktop application for managing school operations, student records, and administrative tasks",
+      tags: ["C#", "Database", "Desktop App"],
+      image: "�",
+      color: "#007396",
+      status: "Completed",
       link: "#"
     },
     {
       id: 4,
-      title: "Portfolio Website",
-      description: "Animated portfolio website with modern design and smooth interactions",
-      tags: ["React", "Framer Motion", "TypeScript"],
-      image: "🐬",
-      color: "#96CEB4",
-      status: "Live",
+      title: "Kick Blast Judo Payment Calculator",
+      description: "Academic project for calculating judo training payments with user-friendly interface",
+      tags: ["C#", "Desktop App", "Academic"],
+      image: "🥋",
+      color: "#FF6B6B",
+      status: "Completed",
       link: "#"
     },
     {
       id: 5,
-      title: "AI Chat Bot",
-      description: "Intelligent chatbot with natural language processing capabilities",
-      tags: ["Python", "OpenAI", "Flask", "React"],
-      image: "🤖",
-      color: "#FECA57",
-      status: "Coming Soon",
+      title: "Velvet Vouge Shopping Web App",
+      description: "Full-stack e-commerce web application with front-end, back-end, and database integration",
+      tags: ["Front-End", "PHP", "MySQL"],
+      image: "🛍️",
+      color: "#777BB4",
+      status: "Completed",
       link: "#"
     },
     {
       id: 6,
-      title: "Music Streaming App",
-      description: "Spotify-like music streaming application with playlists and recommendations",
-      tags: ["React Native", "Node.js", "PostgreSQL"],
-      image: "🎵",
-      color: "#A8E6CF",
-      status: "In Progress",
+      title: "Portfolio Website",
+      description: "This animated portfolio website showcasing my skills and projects with modern design",
+      tags: ["React", "TypeScript", "Framer Motion"],
+      image: "🐬",
+      color: "#61DAFB",
+      status: "Live",
       link: "#"
     }
   ]

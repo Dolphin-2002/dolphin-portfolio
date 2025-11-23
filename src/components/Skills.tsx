@@ -1,30 +1,30 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
-const Skills = () => {
+const Skills: React.FC = () => {
   const { ref, inView } = useInView({
     threshold: 0.2,
     triggerOnce: true
   })
 
   const skills = [
-    { name: "React", level: 90, color: "#61DAFB", icon: "⚛️" },
-    { name: "TypeScript", level: 85, color: "#3178C6", icon: "📘" },
-    { name: "JavaScript", level: 92, color: "#F7DF1E", icon: "🟨" },
-    { name: "Node.js", level: 80, color: "#339933", icon: "🟢" },
-    { name: "CSS/SCSS", level: 88, color: "#1572B6", icon: "🎨" },
-    { name: "Python", level: 75, color: "#3776AB", icon: "🐍" },
-    { name: "MongoDB", level: 78, color: "#47A248", icon: "🍃" },
-    { name: "Git", level: 85, color: "#F05032", icon: "📚" }
+    { name: "C#", level: 85, color: "#239120", icon: "💜" },
+    { name: "PHP", level: 80, color: "#777BB4", icon: "�" },
+    { name: "JavaScript", level: 75, color: "#F7DF1E", icon: "🟨" },
+    { name: "HTML/CSS", level: 88, color: "#E34F26", icon: "🎨" },
+    { name: "MySQL", level: 82, color: "#4479A1", icon: "🗄️" },
+    { name: "Python", level: 70, color: "#3776AB", icon: "🐍" },
+    { name: "Java", level: 75, color: "#007396", icon: "☕" },
+    { name: "Git", level: 78, color: "#F05032", icon: "📚" }
   ]
 
   const tools = [
     { name: "VS Code", icon: "💻" },
-    { name: "Figma", icon: "🎨" },
-    { name: "Docker", icon: "🐳" },
-    { name: "AWS", icon: "☁️" },
-    { name: "Firebase", icon: "🔥" },
-    { name: "Vercel", icon: "▲" }
+    { name: "Visual Studio", icon: "🔷" },
+    { name: "PHPMyAdmin", icon: "�️" },
+    { name: "XAMPP", icon: "🌐" },
+    { name: "MS Office", icon: "�" },
+    { name: "Windows", icon: "🖥️" }
   ]
 
   const containerVariants = {
@@ -178,11 +178,11 @@ const Skills = () => {
                 boxShadow: "0 20px 40px rgba(0, 123, 255, 0.1)"
               }}
             >
-              <h3>🚀 Always Learning</h3>
+              <h3>🚀 Currently Learning</h3>
               <p>
                 I believe in continuous learning and staying up-to-date with the latest 
-                technologies. Currently exploring AI/ML integration in web development 
-                and advanced animation techniques.
+                technologies. Currently focusing on full-stack web development and exploring 
+                advanced programming techniques in C# and PHP development.
               </p>
             </motion.div>
           </motion.div>

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
-const About = () => {
+const About: React.FC = () => {
   const { ref, inView } = useInView({
     threshold: 0.3,
     triggerOnce: true
@@ -32,10 +32,10 @@ const About = () => {
   }
 
   const stats = [
-    { number: "50+", label: "Projects Completed", emoji: "🚀" },
-    { number: "3+", label: "Years Experience", emoji: "⏱️" },
-    { number: "100%", label: "Client Satisfaction", emoji: "😊" },
-    { number: "24/7", label: "Support Available", emoji: "🔧" }
+    { number: "5+", label: "Projects Completed", emoji: "🚀" },
+    { number: "2+", label: "Years of Study", emoji: "⏱️" },
+    { number: "100%", label: "Dedication", emoji: "😊" },
+    { number: "24/7", label: "Learning Mode", emoji: "🔧" }
   ]
 
   return (
@@ -75,16 +75,18 @@ const About = () => {
               }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <h3>Hi there! I'm a passionate developer 🐬</h3>
+              <h3>Hi there! I'm a passionate software engineering student 🐬</h3>
               <p>
-                I love creating digital experiences that are not only functional but also 
-                delightful to use. With a keen eye for design and a passion for clean code, 
-                I bring ideas to life through modern web technologies.
+                I'm a software engineering student who's excited to learn and grow in both front-end 
+                and back-end development. I've started building small full-stack projects using 
+                languages like C# and PHP. I enjoy figuring out how things work and solving problems 
+                through debugging and troubleshooting.
               </p>
               <p>
-                When I'm not coding, you'll find me exploring new technologies, contributing 
-                to open source projects, or enjoying a good cup of coffee while sketching 
-                out my next creative project.
+                I'm good at staying organized and managing my time, and I'm comfortable working on 
+                my own to complete projects from start to finish. Currently pursuing my HND in 
+                Software Engineering at Trincomalee, Eastern Province, and continuously learning 
+                new technologies to enhance my development skills.
               </p>
               
               <motion.div 
@@ -94,17 +96,52 @@ const About = () => {
                 transition={{ delay: 0.5 }}
               >
                 <div className="highlight-item">
-                  <span className="highlight-emoji">🎨</span>
-                  <span>Creative Problem Solver</span>
+                  <span className="highlight-emoji">🔧</span>
+                  <span>Problem Solver</span>
                 </div>
                 <div className="highlight-item">
                   <span className="highlight-emoji">⚡</span>
                   <span>Fast Learner</span>
                 </div>
                 <div className="highlight-item">
-                  <span className="highlight-emoji">🤝</span>
-                  <span>Team Player</span>
+                  <span className="highlight-emoji">⏰</span>
+                  <span>Time Management</span>
                 </div>
+              </motion.div>
+
+              <motion.div
+                className="about-actions"
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.7 }}
+              >
+                <motion.a
+                  href="https://www.linkedin.com/in/kulashekaram-danussuthan-b2a601335?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="about-btn linkedin-btn"
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 10px 30px rgba(0, 119, 181, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  📱 View LinkedIn Profile
+                </motion.a>
+                
+                <motion.a
+                  href="https://drive.google.com/file/d/1se-ac8oHdFI26ynIlz_ekd05dprIGC6w/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="about-btn cv-btn"
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 10px 30px rgba(255, 107, 107, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  📄 View CV
+                </motion.a>
               </motion.div>
             </motion.div>
           </motion.div>

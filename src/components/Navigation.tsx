@@ -56,7 +56,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, setActiveSection
           whileTap={{ scale: 0.95 }}
         >
           <span className="logo-emoji">🐬</span>
-          Portfolio
+          Kulashekaram D.
         </motion.div>
         
         <div className="nav-items">

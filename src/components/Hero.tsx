@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
-const Hero = () => {
+const Hero: React.FC = () => {
   const [text, setText] = useState('')
-  const fullText = "Hi, I'm a Creative Developer"
+  const fullText = "Hi, I'm Kulashekaram Danussuthan"
   
   useEffect(() => {
     let currentIndex = 0
@@ -91,14 +91,15 @@ const Hero = () => {
           className="hero-subtitle"
           variants={itemVariants}
         >
-          Crafting digital experiences with passion and precision
+          Software Engineering Student | Full-Stack Developer | Problem Solver
         </motion.p>
         
         <motion.div
           className="hero-buttons"
           variants={itemVariants}
         >
-          <motion.button
+          <motion.a
+            href="#projects"
             className="btn btn-primary"
             whileHover={{ 
               scale: 1.05,
@@ -108,19 +109,22 @@ const Hero = () => {
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             View My Work
-          </motion.button>
+          </motion.a>
           
-          <motion.button
+          <motion.a
+            href="https://www.linkedin.com/in/kulashekaram-danussuthan-b2a601335?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn btn-secondary"
             whileHover={{ 
               scale: 1.05,
-              backgroundColor: "rgba(255, 255, 255, 0.1)"
+              backgroundColor: "rgba(0, 119, 181, 0.2)"
             }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            Contact Me
-          </motion.button>
+            📱 LinkedIn Profile
+          </motion.a>
         </motion.div>
       </motion.div>
       

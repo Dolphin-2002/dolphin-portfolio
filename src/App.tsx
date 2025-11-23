@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import Hero from './components/Hero'
-import Navigation from './components/Navigation'
-import About from './components/About'
-import Projects from './components/Projects'
-import Skills from './components/Skills'
-import Contact from './components/Contact'
-import ParticleBackground from './components/ParticleBackground'
-import CustomCursor from './components/CustomCursor'
+import { motion } from 'framer-motion'
+import {
+  Hero,
+  Navigation,
+  About,
+  Projects,
+  Skills,
+  Contact,
+  ParticleBackground,
+  CustomCursor
+} from './components'
 import './App.css'
 
 function App() {
@@ -28,8 +29,8 @@ function App() {
   }
 
   const pageTransition = {
-    type: "tween",
-    ease: "anticipate",
+    type: "tween" as const,
+    ease: "anticipate" as const,
     duration: 0.8
   }
 

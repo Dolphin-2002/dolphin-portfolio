@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
 
-const Contact = () => {
+const Contact: React.FC = () => {
   const { ref, inView } = useInView({
     threshold: 0.3,
     triggerOnce: true
@@ -20,30 +20,30 @@ const Contact = () => {
     {
       icon: "📧",
       title: "Email",
-      value: "hello@yourportfolio.com",
+      value: "Danussuthan05@gmail.com",
       color: "#FF6B6B",
-      link: "mailto:hello@yourportfolio.com"
+      link: "mailto:Danussuthan05@gmail.com"
     },
     {
-      icon: "💬",
-      title: "Discord",
-      value: "YourUsername#1234",
-      color: "#5865F2",
-      link: "#"
+      icon: "�",
+      title: "Phone",
+      value: "+94760807728",
+      color: "#4ECDC4",
+      link: "tel:+94760807728"
     },
     {
       icon: "📱",
       title: "LinkedIn",
       value: "Connect with me",
       color: "#0077B5",
-      link: "#"
+      link: "https://www.linkedin.com/in/kulashekaram-danussuthan-b2a601335?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
     },
     {
       icon: "🐱",
       title: "GitHub",
       value: "View my repos",
       color: "#333",
-      link: "#"
+      link: "https://github.com/Dolphin-2002"
     }
   ]
 
@@ -302,7 +302,7 @@ const Contact = () => {
               ease: "easeInOut"
             }}
           >
-            Made with 💙 by <strong>Your Name</strong> • © 2025
+            Made with 💙 by <strong>Kulashekaram Danussuthan</strong> • © 2025
           </motion.p>
         </motion.footer>
       </motion.div>

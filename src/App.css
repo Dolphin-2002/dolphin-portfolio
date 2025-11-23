@@ -894,6 +894,90 @@ body {
   color: #b3b3b3;
 }
 
+/* About Section Buttons */
+.about-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.about-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.linkedin-btn {
+  background: linear-gradient(45deg, #0077B5, #005885);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);
+}
+
+.cv-btn {
+  background: linear-gradient(45deg, #FF6B6B, #E55A5A);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+/* Mobile Responsive Updates */
+@media (max-width: 768px) {
+  .about-actions {
+    flex-direction: column;
+  }
+  
+  .about-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .about-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .about-highlights {
+    justify-content: center;
+  }
+  
+  .highlight-item {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-highlights {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .highlight-item {
+    width: 200px;
+    justify-content: center;
+  }
+  
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .section-header p {
+    font-size: 1rem;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 968px) {
   .desktop-nav {

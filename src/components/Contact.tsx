@@ -11,26 +11,15 @@ const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    reason: 'Work',
+    subject: '',
     message: ''
   })
 
   const [focusedField, setFocusedField] = useState<string | null>(null)
+  const [attachment, setAttachment] = useState<File | null>(null)
 
   const contactMethods = [
-    {
-      icon: "📧",
-      title: "Email",
-      value: "Danussuthan05@gmail.com",
-      color: "#FF6B6B",
-      link: "mailto:Danussuthan05@gmail.com"
-    },
-    {
-      icon: "�",
-      title: "Phone",
-      value: "+94760807728",
-      color: "#4ECDC4",
-      link: "tel:+94760807728"
-    },
     {
       icon: "📱",
       title: "LinkedIn",
@@ -47,11 +36,125 @@ const Contact: React.FC = () => {
     }
   ]
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null
+    setAttachment(file)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      alert('Please fill in all required fields')
+      return
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      alert('Please enter a valid email address')
+      return
+    }
+
+    // Show loading state
+    const submitButton = document.querySelector('.submit-button') as HTMLButtonElement
+    if (submitButton) {
+      submitButton.disabled = true
+      submitButton.textContent = 'Sending... 🐬'
+    }
+
+    try {
+      // Prepare form data for submission
+      const submitData: any = {
+        name: formData.name,
+        email: formData.email,
+        reason: formData.reason,
+        subject: formData.subject,
+        message: formData.message
+      }
+
+      // Handle file attachment
+      if (attachment) {
+        const reader = new FileReader()
+        const filePromise = new Promise((resolve) => {
+          reader.onload = () => {
+            submitData.attachment = {
+              name: attachment.name,
+              type: attachment.type,
+              content: reader.result
+            }
+            resolve(submitData)
+          }
+          reader.readAsDataURL(attachment)
+        })
+        await filePromise
+      }
+
+      // Send to Netlify function
+      const response = await fetch('/.netlify/functions/send-contact-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(submitData)
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        alert('Thank you! Your message has been sent successfully. Check your email for confirmation! 🐬')
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          reason: 'Work',
+          subject: '',
+          message: ''
+        })
+        setAttachment(null)
+        // Reset file input
+        const fileInput = document.getElementById('attachment') as HTMLInputElement
+        if (fileInput) fileInput.value = ''
+      } else {
+        // Handle different error types
+        let errorMessage = 'Failed to send message. '
+
+        if (result.error) {
+          if (result.error.includes('Missing')) {
+            errorMessage += 'Please fill in all required fields.';
+          } else if (result.error.includes('email')) {
+            errorMessage += 'Please enter a valid email address.';
+          } else if (result.error.includes('Attachment too large')) {
+            errorMessage += 'File size must be under 10MB.';
+          } else if (result.error.includes('Invalid attachment')) {
+            errorMessage += 'Please check your file and try again.';
+          } else {
+            errorMessage += result.error;
+          }
+        } else {
+          errorMessage += 'Please try again later or contact us directly.';
+        }
+
+        alert(errorMessage)
+      }
+    } catch (error) {
+      console.error('Submission error:', error)
+      alert('Failed to send message. Please try again later.')
+    } finally {
+      // Reset button
+      if (submitButton) {
+        submitButton.disabled = false
+        submitButton.textContent = 'Send Message ✈️'
+      }
+    }
   }
 
   const containerVariants = {
@@ -153,7 +256,7 @@ const Contact: React.FC = () => {
           <motion.div className="contact-form-container" variants={itemVariants}>
             <motion.form 
               className="contact-form"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit}
               whileHover={{ 
                 boxShadow: "0 20px 40px rgba(0, 123, 255, 0.1)" 
               }}
@@ -217,6 +320,64 @@ const Contact: React.FC = () => {
               </motion.div>
 
               <motion.div className="form-group">
+                <motion.select
+                  name="reason"
+                  value={formData.reason}
+                  onChange={handleInputChange}
+                  onFocus={() => setFocusedField('reason')}
+                  onBlur={() => setFocusedField(null)}
+                  className={focusedField === 'reason' ? 'focused' : ''}
+                  whileFocus={{ 
+                    scale: 1.02,
+                    boxShadow: "0 0 20px rgba(0, 123, 255, 0.3)"
+                  }}
+                >
+                  <option value="Work">🤝 Work Inquiry</option>
+                  <option value="Collaboration">🎨 Collaboration</option>
+                  <option value="Other">📋 Other</option>
+                </motion.select>
+                <motion.label
+                  className="floating-label"
+                  animate={{
+                    y: focusedField === 'reason' || formData.reason ? -25 : 0,
+                    scale: focusedField === 'reason' || formData.reason ? 0.8 : 1,
+                    color: focusedField === 'reason' ? '#007BFF' : '#666'
+                  }}
+                  transition={{ duration: 0.2 }}
+                >
+                  📌 Reason for Contact
+                </motion.label>
+              </motion.div>
+
+              <motion.div className="form-group">
+                <motion.input
+                  type="text"
+                  name="subject"
+                  placeholder="Subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  onFocus={() => setFocusedField('subject')}
+                  onBlur={() => setFocusedField(null)}
+                  className={focusedField === 'subject' ? 'focused' : ''}
+                  whileFocus={{ 
+                    scale: 1.02,
+                    boxShadow: "0 0 20px rgba(0, 123, 255, 0.3)"
+                  }}
+                />
+                <motion.label
+                  className="floating-label"
+                  animate={{
+                    y: focusedField === 'subject' || formData.subject ? -25 : 0,
+                    scale: focusedField === 'subject' || formData.subject ? 0.8 : 1,
+                    color: focusedField === 'subject' ? '#007BFF' : '#666'
+                  }}
+                  transition={{ duration: 0.2 }}
+                >
+                  📝 Subject
+                </motion.label>
+              </motion.div>
+
+              <motion.div className="form-group">
                 <motion.textarea
                   name="message"
                   placeholder="Your Message"
@@ -242,6 +403,24 @@ const Contact: React.FC = () => {
                 >
                   💬 Message
                 </motion.label>
+              </motion.div>
+
+              <motion.div className="form-group">
+                <div className="file-input-wrapper">
+                  <input
+                    type="file"
+                    name="attachment"
+                    accept="image/*,application/pdf"
+                    onChange={handleFileChange}
+                    id="attachment"
+                  />
+                  <label htmlFor="attachment" className="file-input-label">
+                    📎 Choose file (optional)
+                  </label>
+                  <span className="file-name">
+                    {attachment ? attachment.name : 'No file selected'}
+                  </span>
+                </div>
               </motion.div>
 
               <motion.button

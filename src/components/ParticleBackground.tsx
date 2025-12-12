@@ -99,10 +99,10 @@ const ParticleBackground: React.FC = () => {
         const dy = mouseY - particle.y
         const distance = Math.sqrt(dx * dx + dy * dy)
         
-        if (distance < 100) {
-          const force = (100 - distance) / 100
-          particle.vx += (dx / distance) * force * 0.01
-          particle.vy += (dy / distance) * force * 0.01
+        if (distance < 80) { // Reduced from 100 to 80
+          const force = (80 - distance) / 80 * 0.005 // Reduced force from 0.01 to 0.005
+          particle.vx += (dx / distance) * force
+          particle.vy += (dy / distance) * force
         }
       })
     }

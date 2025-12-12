@@ -108,41 +108,6 @@ const About: React.FC = () => {
                   <span>Time Management</span>
                 </div>
               </motion.div>
-
-              <motion.div
-                className="about-actions"
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.7 }}
-              >
-                <motion.a
-                  href="https://www.linkedin.com/in/kulashekaram-danussuthan-b2a601335?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="about-btn linkedin-btn"
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: "0 10px 30px rgba(0, 119, 181, 0.3)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  📱 View LinkedIn Profile
-                </motion.a>
-                
-                <motion.a
-                  href="https://drive.google.com/file/d/1se-ac8oHdFI26ynIlz_ekd05dprIGC6w/view?usp=sharing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="about-btn cv-btn"
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: "0 10px 30px rgba(255, 107, 107, 0.3)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  📄 View CV
-                </motion.a>
-              </motion.div>
             </motion.div>
           </motion.div>
 

@@ -2,6 +2,14 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useState, useEffect } from 'react'
 
+interface Repo {
+  id: number | string;
+  name: string;
+  description?: string;
+  language?: string;
+  html_url?: string;
+}
+
 const Projects: React.FC = () => {
   const { ref, inView } = useInView({
     threshold: 0.2,
@@ -10,7 +18,16 @@ const Projects: React.FC = () => {
 
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
-  const [projects, setProjects] = useState<any[]>([])
+  const [projects, setProjects] = useState<{
+    id: number | string;
+    title: string;
+    description: string;
+    tags: string[];
+    image: string;
+    color: string;
+    status: string;
+    link: string;
+  }[]>([])
 
   const [showAllProjects, setShowAllProjects] = useState(false)
 
@@ -18,10 +35,10 @@ const Projects: React.FC = () => {
     const fetchProjects = async () => {
       try {
         const response = await fetch('https://api.github.com/users/Dolphin-2002/repos')
-        const repos = await response.json()
+        const repos: Repo[] = await response.json()
         const mappedProjects = repos
-          .filter(repo => repo.name !== 'dolphin-portfolio') // Exclude the portfolio repo itself
-          .map((repo, index) => ({
+          .filter((repo: Repo) => repo.name !== 'dolphin-portfolio') // Exclude the portfolio repo itself
+          .map((repo: Repo) => ({
             id: repo.id,
             title: repo.name,
             description: repo.description || 'No description available',
@@ -29,7 +46,7 @@ const Projects: React.FC = () => {
             image: '📁', // Simple folder icon for all projects
             color: '#6B7280', // Neutral gray color
             status: 'Public',
-            link: repo.html_url
+            link: repo.html_url || '#',
           }))
         setProjects(mappedProjects)
       } catch (error) {
@@ -162,7 +179,7 @@ const Projects: React.FC = () => {
                   <p>{project.description}</p>
                   
                   <div className="project-tags">
-                    {project.tags.map((tag, tagIndex) => (
+                    {project.tags.map((tag: string, tagIndex: number) => (
                       <motion.span
                         key={tag}
                         className="project-tag"

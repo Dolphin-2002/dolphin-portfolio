@@ -2,12 +2,16 @@ const nodemailer = require('nodemailer');
 
 // Create transporter with Gmail
 const createTransporter = () => {
-  return nodemailer.createTransporter({
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+
+  if (!user || !pass) {
+    throw new Error('Missing required environment variables: GMAIL_USER and/or GMAIL_APP_PASSWORD');
+  }
+
+  return nodemailer.createTransport({
     service: 'gmail',
-    auth: {
-      user: 'dolphin.co.mailer@gmail.com',
-      pass: 'uwwa fgla wtld cefw' // App password
-    }
+    auth: { user, pass }
   });
 };
 
@@ -499,7 +503,7 @@ exports.handler = async (event, context) => {
 
     // Send email to admin (dolphin.co.solution@gmail.com)
     const adminMailOptions = {
-      from: 'dolphin.co.mailer@gmail.com',
+      from: process.env.GMAIL_USER, // Use dynamic sender email
       to: 'dolphin.co.solution@gmail.com',
       subject: `🐬 New Portfolio Contact: ${formData.subject}`,
       html: createAdminEmailTemplate(formData, formData.attachment),
@@ -508,7 +512,7 @@ exports.handler = async (event, context) => {
 
     // Send thank you email to user
     const userMailOptions = {
-      from: 'dolphin.co.mailer@gmail.com',
+      from: process.env.GMAIL_USER, // Use dynamic sender email
       to: formData.email,
       subject: '🐬 Thank You for Contacting Us - Dolphin Portfolio',
       html: createUserEmailTemplate(formData, formData.attachment),

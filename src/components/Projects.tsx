@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Projects: React.FC = () => {
   const { ref, inView } = useInView({
@@ -10,68 +10,34 @@ const Projects: React.FC = () => {
 
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
-  const projects = [
-    {
-      id: 1,
-      title: "Study Management System",
-      description: "A desktop application built with C# to help students organize and manage their study schedules effectively",
-      tags: ["C#", "Desktop App", ".NET Framework"],
-      image: "�",
-      color: "#239120",
-      status: "Completed",
-      link: "#"
-    },
-    {
-      id: 2,
-      title: "HTML Game Development",
-      description: "Interactive web-based games using HTML, CSS, and JavaScript with engaging user interfaces",
-      tags: ["HTML", "CSS", "JavaScript"],
-      image: "🎮",
-      color: "#E34F26",
-      status: "Completed",
-      link: "#"
-    },
-    {
-      id: 3,
-      title: "School Management System",
-      description: "Desktop application for managing school operations, student records, and administrative tasks",
-      tags: ["C#", "Database", "Desktop App"],
-      image: "�",
-      color: "#007396",
-      status: "Completed",
-      link: "#"
-    },
-    {
-      id: 4,
-      title: "Kick Blast Judo Payment Calculator",
-      description: "Academic project for calculating judo training payments with user-friendly interface",
-      tags: ["C#", "Desktop App", "Academic"],
-      image: "🥋",
-      color: "#FF6B6B",
-      status: "Completed",
-      link: "#"
-    },
-    {
-      id: 5,
-      title: "Velvet Vouge Shopping Web App",
-      description: "Full-stack e-commerce web application with front-end, back-end, and database integration",
-      tags: ["Front-End", "PHP", "MySQL"],
-      image: "🛍️",
-      color: "#777BB4",
-      status: "Completed",
-      link: "#"
-    },
-    {
-      id: 6,
-      title: "Portfolio Website",
-      description: "This animated portfolio website showcasing my skills and projects with modern design",
-      tags: ["React", "TypeScript", "Framer Motion"],
-      image: "🐬",
-      color: "#61DAFB",
-      status: "Live",
-      link: "#"
+  const [projects, setProjects] = useState<any[]>([])
+
+  const [showAllProjects, setShowAllProjects] = useState(false)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('https://api.github.com/users/Dolphin-2002/repos')
+        const repos = await response.json()
+        const mappedProjects = repos
+          .filter(repo => repo.name !== 'dolphin-portfolio') // Exclude the portfolio repo itself
+          .map((repo, index) => ({
+            id: repo.id,
+            title: repo.name,
+            description: repo.description || 'No description available',
+            tags: [repo.language || 'Unknown'],
+            image: '📁', // Simple folder icon for all projects
+            color: '#6B7280', // Neutral gray color
+            status: 'Public',
+            link: repo.html_url
+          }))
+        setProjects(mappedProjects)
+      } catch (error) {
+        console.error('Error fetching repos:', error)
+      }
     }
-  ]
+    fetchProjects()
+  }, [])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -139,7 +105,7 @@ const Projects: React.FC = () => {
           className="projects-grid"
           variants={containerVariants}
         >
-          {projects.map((project, index) => (
+          {projects.slice(0, showAllProjects ? projects.length : 6).map((project, index) => (
             <motion.div
               key={project.id}
               className="project-card"
@@ -235,6 +201,7 @@ const Projects: React.FC = () => {
                       boxShadow: `0 5px 15px ${project.color}40`
                     }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => window.open(project.link, '_blank')}
                   >
                     <span>View Project</span>
                     <motion.span
@@ -278,8 +245,9 @@ const Projects: React.FC = () => {
               boxShadow: "0 10px 30px rgba(0, 123, 255, 0.3)"
             }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => setShowAllProjects(!showAllProjects)}
           >
-            <span>View All Projects</span>
+            <span>{showAllProjects ? "Show Less" : "View All Projects"}</span>
             <motion.span
               animate={{ rotate: [0, 360] }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}

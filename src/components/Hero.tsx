@@ -1,8 +1,9 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 const Hero: React.FC = () => {
   const [text, setText] = useState('')
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true)
   const fullText = "Hi, I'm Kulashekaram Danussuthan"
   
   useEffect(() => {
@@ -15,6 +16,13 @@ const Hero: React.FC = () => {
       }
     }, 100)
     return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowScrollIndicator(false)
+    }, 2000)
+    return () => clearTimeout(timer)
   }, [])
 
   const containerVariants = {
@@ -41,15 +49,6 @@ const Hero: React.FC = () => {
     }
   }
 
-  const floatingAnimation = {
-    y: [-10, 10, -10],
-    transition: {
-      duration: 4,
-      repeat: Infinity,
-      ease: "easeInOut" as const
-    }
-  }
-
   return (
     <section className="hero" id="home">
       <motion.div
@@ -66,11 +65,28 @@ const Hero: React.FC = () => {
         animate="visible"
       >
         <motion.div
-          className="hero-emoji"
+          className="hero-image-container"
           variants={itemVariants}
-          animate={floatingAnimation}
         >
-          🐬
+          <motion.img
+            src="/profile.jpg"
+            alt="Kulashekaram Danussuthan"
+            className="hero-profile-image"
+            data-cursor="default"
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 20px 40px rgba(0, 168, 255, 0.4)"
+            }}
+            transition={{ 
+              type: "spring", 
+              stiffness: 300, 
+              damping: 25 
+            }}
+            onError={(e) => {
+              console.error('Image failed to load:', e);
+              e.currentTarget.style.display = 'none';
+            }}
+          />
         </motion.div>
         
         <motion.h1
@@ -125,24 +141,44 @@ const Hero: React.FC = () => {
           >
             📱 LinkedIn Profile
           </motion.a>
+          
+          <motion.a
+            href="https://drive.google.com/file/d/1Bppp16oNoHDYR2W3B016jeah-8jkF-4n/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-resume"
+            whileHover={{ 
+              scale: 1.05,
+              backgroundColor: "rgba(0, 168, 255, 0.1)"
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            📄 Download Resume
+          </motion.a>
         </motion.div>
       </motion.div>
       
-      <motion.div
-        className="scroll-indicator"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2 }}
-      >
-        <motion.div
-          className="scroll-arrow"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          ↓
-        </motion.div>
-        <span>Scroll to explore</span>
-      </motion.div>
+      <AnimatePresence>
+        {showScrollIndicator && (
+          <motion.div
+            className="scroll-indicator"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.div
+              className="scroll-arrow"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              ↓
+            </motion.div>
+            <span>Scroll to explore</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

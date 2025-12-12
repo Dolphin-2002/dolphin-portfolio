@@ -7,8 +7,7 @@ import {
   Projects,
   Skills,
   Contact,
-  ParticleBackground,
-  CustomCursor
+  ParticleBackground
 } from './components'
 import './App.css'
 
@@ -50,7 +49,7 @@ function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          Loading Portfolio...
+          Loading...
         </motion.h2>
       </div>
     )
@@ -58,7 +57,6 @@ function App() {
 
   return (
     <>
-      <CustomCursor />
       <ParticleBackground />
       <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
       
